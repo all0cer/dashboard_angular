@@ -1,0 +1,69 @@
+<div *ngIf="barra.length > 0; else noData">
+  <ngx-charts-bar-vertical
+    [results]="barra"
+    [xAxis]="true"
+    [yAxis]="true"
+    [legend]="true"
+    [showXAxisLabel]="true"
+    [showYAxisLabel]="true"
+    [xAxisLabel]="'Clientes'"
+    [yAxisLabel]="'Número de Aluguéis'">
+  </ngx-charts-bar-vertical>
+</div>
+
+<ng-template #noData>
+  <p>Nenhum dado disponível para exibir.</p>
+</ng-template>
+
+<div *ngIf="temaChartData.length > 0; else noData">
+  <ngx-charts-bar-vertical
+    [results]="temaChartData"
+    [xAxis]="true"
+    [yAxis]="true"
+    [legend]="true"
+    [showXAxisLabel]="true"
+    [showYAxisLabel]="true"
+    [xAxisLabel]="'Temas'"
+    [yAxisLabel]="'Número de Aluguéis'">
+  </ngx-charts-bar-vertical>
+</div>
+
+
+<div *ngIf="totalThemesChartData.length > 0; else noData" style="width: 100%; height: 400px;">
+  <ngx-charts-bar-horizontal
+    [results]="totalThemesChartData"
+    [xAxis]="true"
+    [legend]="true"
+    [showXAxisLabel]="true"
+    [xAxisLabel]="'Quantida de Temas cadastrados'">
+  </ngx-charts-bar-horizontal>
+</div>
+
+<div *ngIf="totalClientsChartData.length > 0; else noData" style="width: 100%; height: 200px;">
+  <ngx-charts-bar-horizontal
+    [results]="totalClientsChartData"
+    [xAxis]="true"
+    [legend]="true"
+    [showXAxisLabel]="true"
+    [xAxisLabel]="'Quantida de Clientes cadastrados'">
+  </ngx-charts-bar-horizontal>
+</div>
+
+
+<ng-template #noData>
+  <p>Nenhum dado disponível para exibir.</p>
+</ng-template>
+
+<div *ngIf="totalRevenue > 0; else noData" class="chart-container">
+  <ngx-charts-bar-horizontal
+    [results]="[{ name: 'Receita Total', value: totalRevenue }]"
+    [xAxis]="true"
+    [legend]="false"
+    [showXAxisLabel]="true"
+    [xAxisLabel]="'Receita Total'">
+  </ngx-charts-bar-horizontal>
+</div>
+
+<ng-template #noData>
+  <p>Nenhum cliente disponível no momento.</p>
+</ng-template>

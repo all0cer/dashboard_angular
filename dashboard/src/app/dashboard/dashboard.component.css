@@ -1,0 +1,22 @@
+.dashboard-container {
+    padding: 20px;
+  }
+  
+  .summary {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+  }
+  
+  .card {
+    padding: 10px;
+    background-color: #f4f4f4;
+    border-radius: 5px;
+    text-align: center;
+  }
+  
+  .chart-container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
