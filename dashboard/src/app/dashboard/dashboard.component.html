@@ -1,4 +1,7 @@
-<div *ngIf="barra.length > 0; else noData">
+<div class="title">
+  <h1>Dashboard Aluguel de temas</h1>
+</div>
+<div *ngIf="barra.length > 0; else noData" class="chart-container">
   <ngx-charts-bar-vertical
     [results]="barra"
     [xAxis]="true"
@@ -15,7 +18,7 @@
   <p>Nenhum dado disponível para exibir.</p>
 </ng-template>
 
-<div *ngIf="temaChartData.length > 0; else noData">
+<div *ngIf="temaChartData.length > 0; else noData" class="chart-container">
   <ngx-charts-bar-vertical
     [results]="temaChartData"
     [xAxis]="true"
@@ -29,7 +32,7 @@
 </div>
 
 
-<div *ngIf="totalThemesChartData.length > 0; else noData" style="width: 100%; height: 400px;">
+<div *ngIf="totalThemesChartData.length > 0; else noData" class="chart-container">
   <ngx-charts-bar-horizontal
     [results]="totalThemesChartData"
     [xAxis]="true"
@@ -39,7 +42,7 @@
   </ngx-charts-bar-horizontal>
 </div>
 
-<div *ngIf="totalClientsChartData.length > 0; else noData" style="width: 100%; height: 200px;">
+<div *ngIf="totalClientsChartData.length > 0; else noData" class="chart-container">
   <ngx-charts-bar-horizontal
     [results]="totalClientsChartData"
     [xAxis]="true"
