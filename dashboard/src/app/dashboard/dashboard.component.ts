@@ -17,9 +17,15 @@ export class DashboardComponent implements OnInit {
   totalThemesChartData: any[] = [];
   totalClientsChartData: any[] = [];
   totalRevenue: number = 0;
+  rentByPeriod: any[] = [];
+  revenueByPeriod: any[] = [];
   colorScheme = {
+    name: 'custom',
+    selectable: true,
+    group: 'Ordinal',
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
   };
+  
   
   constructor(private apiService: ApiService) {}
 
@@ -30,6 +36,8 @@ export class DashboardComponent implements OnInit {
         this.updateMostRentedThemes();
         this.updateTotalThemesChart();
         this.calculateTotalRevenue();
+        this.updateThemesRentedByPeriod();
+        this.updateRevenueByPeriod();
       },
       (error) => {
         console.error('Erro ao obter temas', error);
@@ -51,6 +59,8 @@ export class DashboardComponent implements OnInit {
         this.updateBarChartData();
         this.updateMostRentedThemes();
         this.calculateTotalRevenue();
+        this.updateThemesRentedByPeriod();
+        this.updateRevenueByPeriod();
       },
       (error) => {
         console.error('Erro ao obter alugueis', error);
@@ -162,4 +172,52 @@ private calculateTotalRevenue(): void {
       }
     });
   }
+
+  updateThemesRentedByPeriod() {
+    if (this.rents.length > 0) {
+      // Mapeia os aluguéis para os meses (ou anos) de interesse
+      const rentCountByPeriod: { [key: string]: number } = {};
+      
+      this.rents.forEach(rent => {
+        const rentDate = new Date(rent.date); // Assumindo que você tem uma data associada a cada aluguel
+        const monthYear = `${rentDate.getMonth() + 1}/${rentDate.getFullYear()}`; // Agrupa por mês/ano
+  
+        rentCountByPeriod[monthYear] = (rentCountByPeriod[monthYear] || 0) + 1;
+      });
+  
+      // Mapeia os dados para o formato do gráfico
+      this.rentByPeriod = Object.keys(rentCountByPeriod).map(period => ({
+        name: period,
+        value: rentCountByPeriod[period]
+      }));
+  
+      console.log('Alugados por Período:', this.rentByPeriod);
+    }
+  }  
+
+  updateRevenueByPeriod() {
+    if (this.rents.length > 0 && this.themes.length > 0) {
+      const revenueByPeriod: { [key: string]: number } = {};
+      
+      this.rents.forEach(rent => {
+        const rentDate = new Date(rent.date);
+        const monthYear = `${rentDate.getMonth() + 1}/${rentDate.getFullYear()}`;
+  
+        const theme = this.themes.find(t => t.id === rent.theme);
+        if (theme) {
+          revenueByPeriod[monthYear] = (revenueByPeriod[monthYear] || 0) + theme.price;
+        }
+      });
+  
+      // Mapeia os dados para o formato do gráfico
+      this.revenueByPeriod = Object.keys(revenueByPeriod).map(period => ({
+        name: period,
+        value: revenueByPeriod[period]
+      }));
+  
+      console.log('Receita por Período:', this.revenueByPeriod);
+    }
+  }
+  
+
 }

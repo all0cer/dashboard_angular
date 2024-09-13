@@ -2,6 +2,7 @@
   <h1>Dashboard Aluguel de temas</h1>
 </div>
 <div *ngIf="barra.length > 0; else noData" class="chart-container">
+  <p>Usuários que mais alugaram temas</p>
   <ngx-charts-bar-vertical
     [results]="barra"
     [xAxis]="true"
@@ -19,6 +20,7 @@
 </ng-template>
 
 <div *ngIf="temaChartData.length > 0; else noData" class="chart-container">
+  <p>Temas mais alugados</p>
   <ngx-charts-bar-vertical
     [results]="temaChartData"
     [xAxis]="true"
@@ -33,6 +35,7 @@
 
 
 <div *ngIf="totalThemesChartData.length > 0; else noData" class="chart-container">
+  <p>Temas cadastrados</p>
   <ngx-charts-bar-horizontal
     [results]="totalThemesChartData"
     [xAxis]="true"
@@ -43,6 +46,7 @@
 </div>
 
 <div *ngIf="totalClientsChartData.length > 0; else noData" class="chart-container">
+  <p>Clientes cadastrados</p>
   <ngx-charts-bar-horizontal
     [results]="totalClientsChartData"
     [xAxis]="true"
@@ -57,7 +61,25 @@
   <p>Nenhum dado disponível para exibir.</p>
 </ng-template>
 
+<div *ngIf="rentByPeriod.length > 0; else noData" class="chart-container">
+  <p>Quantidade de Temas Alugados no Período</p>
+  <ngx-charts-bar-horizontal
+    [results]="rentByPeriod"
+    [xAxis]="true"
+    [legend]="false"
+    [showXAxisLabel]="true"
+    [xAxisLabel]="'Período'"
+    [yAxisLabel]="'Quantidade de Aluguel'">
+  </ngx-charts-bar-horizontal>
+</div>
+
+<ng-template #noData>
+  <p>Nenhum dado disponível para exibir.</p>
+</ng-template>
+
+
 <div *ngIf="totalRevenue > 0; else noData" class="chart-container">
+  <p>Receita Total de alugéis</p>
   <ngx-charts-bar-horizontal
     [results]="[{ name: 'Receita Total', value: totalRevenue }]"
     [xAxis]="true"
@@ -69,4 +91,23 @@
 
 <ng-template #noData>
   <p>Nenhum cliente disponível no momento.</p>
+</ng-template>
+
+<div *ngIf="revenueByPeriod.length > 0; else noData" class="chart-container">
+  <p>Receita por Período (Mês/Ano)</p>
+  <ngx-charts-line-chart
+    [results]="revenueByPeriod"
+    [xAxis]="true"
+    [yAxis]="true"
+    [legend]="true"
+    [showXAxisLabel]="true"
+    [showYAxisLabel]="true"
+    [xAxisLabel]="'Período'"
+    [yAxisLabel]="'Receita'"
+    [scheme]="'colorScheme'"> 
+  </ngx-charts-line-chart>
+</div>
+
+<ng-template #noData>
+  <p>Nenhum dado disponível para exibir.</p>
 </ng-template>

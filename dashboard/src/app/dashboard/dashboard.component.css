@@ -1,8 +1,8 @@
  .dashboard-container {
     display: flex;
-    flex-wrap: wrap; /* Permite que os gráficos "quebrem" para a próxima linha se necessário */
+    flex-wrap: wrap;
     justify-content: space-between;
-    gap: 20px; /* Espaçamento entre os gráficos */
+    gap: 20px;
     padding: 20px;
   }
   
@@ -29,9 +29,10 @@
   ngx-charts-bar-vertical, ngx-charts-bar-horizontal {
     display: block;
     width: 100%;
-    max-width: 1200px; /* define um tamanho máximo */
-    margin: 20px auto; /* centraliza os gráficos */
+    max-width: 1200px;
+    margin: 20px auto;
     border-radius: 5px;
+    justify-content: center;
   }
 
   .chart-container {
@@ -40,15 +41,15 @@
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     background-color: #f9f9f9;
-    flex: 1 1 calc(50% - 20px); /* Cada gráfico ocupa 50% da largura da linha, com margem entre eles */
+    flex: 1 1 calc(50% - 20px);
     box-sizing: border-box;
-    margin-bottom: 20px; /* Espaçamento inferior para separar as linhas */
+    margin-bottom: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
   p {
     text-align: center;
-    color: #666;
+    color: #5b5b5b;
     font-size: 16px;
   }
   
