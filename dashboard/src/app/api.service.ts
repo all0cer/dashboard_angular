@@ -34,5 +34,8 @@ export class ApiService {
     return this.http.get(this.addressUrl);
   }
 
+  createTheme(theme: { name: string; color: string; price: number; itens: number[] }): Observable<any> {
+    return this.http.post<any>(this.apiUrl, theme);
+  }
 
 }

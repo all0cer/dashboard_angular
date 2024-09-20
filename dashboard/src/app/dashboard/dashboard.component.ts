@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../api.service';
+import moment from 'moment';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -9,6 +11,7 @@ import { ApiService } from '../api.service';
 export class DashboardComponent implements OnInit {
   themes: any[] = [];
   clients: any[] = [];
+  newTheme = { name: '', color: '', price: 0, itens: [] };
   rents: any[] = [];
   itens: any[] = [];
   addresses: any[] = [];
@@ -16,6 +19,8 @@ export class DashboardComponent implements OnInit {
   temaChartData: any[] = [];
   totalThemesChartData: any[] = [];
   totalClientsChartData: any[] = [];
+  rentedThemesByPeriod: any[] = [];
+  temaChartLabels: string[] = [];
   totalRevenue: number = 0;
   colorScheme = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
@@ -27,12 +32,15 @@ export class DashboardComponent implements OnInit {
     this.apiService.getThemes().subscribe(
       (data) => {
         this.themes = data;
+        this.updateThemesRentedByPeriod('2024-08-01', '2024-08-31', data);
+        console.log('Tema Chart Data:', this.temaChartData);
+        console.log('Tema Chart Labels:', this.temaChartLabels)
         this.updateMostRentedThemes();
         this.updateTotalThemesChart();
         this.calculateTotalRevenue();
       },
       (error) => {
-        console.error('Erro ao obter temas', error);
+        // console.error('Erro ao obter temas', error);
       }
     );
     this.apiService.getClients().subscribe(
@@ -42,9 +50,10 @@ export class DashboardComponent implements OnInit {
         this.updateTotalClientsChart();
       },
       (error) => {
-        console.error('Erro ao obter clientes', error);
+        // console.error('Erro ao obter clientes', error);
       }
     );
+
     this.apiService.getRents().subscribe(
       (data) => {
         this.rents = data;
@@ -53,15 +62,16 @@ export class DashboardComponent implements OnInit {
         this.calculateTotalRevenue();
       },
       (error) => {
-        console.error('Erro ao obter alugueis', error);
+        // console.error('Erro ao obter alugueis', error);
       }
     );
+
     this.apiService.getItens().subscribe(
       (data) => {
         this.itens = data;
       },
       (error) => {
-        console.error('Erro ao obter itens', error);
+        // console.error('Erro ao obter itens', error);
       }
     );
     this.apiService.getAddress().subscribe(
@@ -69,7 +79,20 @@ export class DashboardComponent implements OnInit {
         this.addresses = data;
       },
       (error) => {
-        console.error('Erro ao obter endereços', error);
+        // console.error('Erro ao obter endereços', error);
+      }
+    );
+  }
+
+  createTheme() {
+    this.apiService.createTheme(this.newTheme).subscribe(
+      (response) => {
+        // console.log('Tema criado com sucesso:', response);
+        this.themes.push(response);  // Adiciona o novo tema à lista de temas
+        this.newTheme = { name: '', color: '', price: 0, itens: [] };  // Reseta o formulário
+      },
+      (error) => {
+        // console.error('Erro ao criar tema', error);
       }
     );
   }
@@ -118,7 +141,7 @@ export class DashboardComponent implements OnInit {
       });
   
       // Log dos dados intermediários para depuração
-      console.log('Theme Count Map:', themeCountMap);
+      // console.log('Theme Count Map:', themeCountMap);
   
       // Mapeia os dados para o formato do gráfico
       this.temaChartData = Object.keys(themeCountMap).map(themeId => {
@@ -129,9 +152,9 @@ export class DashboardComponent implements OnInit {
           value: count
         };
       });
-  
+      console.log('Dados do gráfico de temas:', this.temaChartData);
       // Log dos dados processados para depuração
-      console.log('Theme Chart Data:', this.temaChartData);
+      // console.log('Theme Chart Data:', this.temaChartData);
     }
   }
 
@@ -162,4 +185,22 @@ private calculateTotalRevenue(): void {
       }
     });
   }
+
+  updateThemesRentedByPeriod(startDate: string, endDate: string, rents: any[]) {
+    const themeCountMap: { [key: number]: number } = {};
+    const start = moment(startDate);
+    const end = moment(endDate);
+
+    rents.forEach(rent => {
+      const rentDate = moment(rent.date);
+      if (rentDate.isBetween(start, end, undefined, '[]')) {
+        const themeId = rent.theme;
+        themeCountMap[themeId] = (themeCountMap[themeId] || 0) + 1;
+      }
+    });
+
+    this.temaChartData = Object.values(themeCountMap);
+    this.temaChartLabels = Object.keys(themeCountMap).map(id => `Tema ${id}`);
+  }
+
 }

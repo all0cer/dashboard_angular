@@ -1,3 +1,6 @@
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+
 <div *ngIf="barra.length > 0; else noData">
   <ngx-charts-bar-vertical
     [results]="barra"
@@ -67,3 +70,40 @@
 <ng-template #noData>
   <p>Nenhum cliente disponível no momento.</p>
 </ng-template>
+
+<div class="container">
+  <h2>Temas Alugados no Período</h2>
+  <app-chart [chartData]="temaChartData" [chartLabels]="temaChartLabels"></app-chart>
+</div>
+
+<!-- <div class="theme-list">
+  <h2>Lista de Temas</h2>
+  <ul>
+    <li *ngFor="let theme of themes">
+      {{ theme.name }} - {{ theme.color }} - R$ {{ theme.price }}
+      <ul>
+        <li *ngFor="let item of theme.itens">Item ID: {{ item }}</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div class="new-theme">
+  <h2>Criar Novo Tema</h2>
+  <form (ngSubmit)="createTheme()">
+    <label for="name">Nome:</label>
+    <input type="text" id="name" [(ngModel)]="newTheme.name" name="name" required>
+
+    <label for="color">Cor:</label>
+    <input type="text" id="color" [(ngModel)]="newTheme.color" name="color" required>
+
+    <label for="price">Preço:</label>
+    <input type="number" id="price" [(ngModel)]="newTheme.price" name="price" required>
+
+    <label for="itens">Itens (IDs separados por vírgula):</label>
+    <input type="text" id="itens" [(ngModel)]="newTheme.itens" name="itens" 
+           (ngModelChange)="newTheme.itens = $event.split(',').map(Number)" required>
+
+    <button type="submit">Criar Tema</button>
+  </form>
+</div> -->
