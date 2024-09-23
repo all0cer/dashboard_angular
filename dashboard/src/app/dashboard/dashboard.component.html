@@ -1,6 +1,37 @@
 <div class="title">
   <h1>Dashboard Aluguel de temas</h1>
 </div>
+
+<div class="chart-container">
+  <form [formGroup]="formUsuario" (ngSubmit)="submeterUsuario()">
+    <h3>cadastrar usuário</h3>
+    <input formControlName="nome" type="text" placeholder="Nome" />
+    <input formControlName="email" type="text" placeholder="Email" />
+    <button type="submit">Salvar</button>
+  </form>
+</div>
+
+<div class="chart-container">
+  <h3>Lista de Usuários</h3>
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Nome</th>
+      <th>Email</th>
+      <th>Ações</th>
+    </tr>
+    <tr *ngFor="let usuario of listaUsuarios">
+      <td>{{ usuario.id }}</td>
+      <td>{{ usuario.nome }}</td>
+      <td>{{ usuario.email }}</td>
+      <td>
+        <button (click)="atualizarUsuario(usuario.id)">Editar</button>
+        <button (click)="excluirUsuario(usuario.id)">Excluir</button>
+      </td>
+    </tr>    
+  </table>
+</div>
+
 <div *ngIf="barra.length > 0; else noData" class="chart-container">
   <p>Usuários que mais alugaram temas</p>
   <ngx-charts-bar-vertical

@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../api.service';
+import { FormBuilder, FormGroup, RequiredValidator, Validators } from '@angular/forms';
+import { id } from '@swimlane/ngx-charts';
+export type Usuario = { 
+  id?: number;
+  nome: string;
+  email: string;
+}
 
 @Component({
   selector: 'app-dashboard',
@@ -19,6 +26,8 @@ export class DashboardComponent implements OnInit {
   totalRevenue: number = 0;
   rentByPeriod: any[] = [];
   revenueByPeriod: any[] = [];
+  formUsuario: FormGroup;
+  listaUsuarios: any[] = [];
   colorScheme = {
     name: 'custom',
     selectable: true,
@@ -27,7 +36,13 @@ export class DashboardComponent implements OnInit {
   };
   
   
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private group: FormBuilder) {
+    this.formUsuario = this.group.group({
+       id: 0,
+       nome: ['', Validators.required],
+       email: []
+    });
+  }
 
   ngOnInit(): void {
     this.apiService.getThemes().subscribe(
@@ -48,6 +63,8 @@ export class DashboardComponent implements OnInit {
         this.clients = data;
         this.updateBarChartData();
         this.updateTotalClientsChart();
+        this.submeterUsuario();
+        this.lerUsuarios();
       },
       (error) => {
         console.error('Erro ao obter clientes', error);
@@ -218,6 +235,87 @@ private calculateTotalRevenue(): void {
       console.log('Receita por Período:', this.revenueByPeriod);
     }
   }
+
+  submeterUsuario() {
+    const id = this.formUsuario.get('id')?.value;
+  
+    if (this.formUsuario.valid) {
+      const user: Usuario = {
+        id: id,
+        nome: this.formUsuario.get('nome')?.value || '',
+        email: this.formUsuario.get('email')?.value || ''
+      };
+  
+      if (id) {
+        // Atualiza usuário existente
+        this.apiService.updateClient(id, user).subscribe(
+          resp => {
+            console.log("Usuário atualizado com sucesso:", resp);
+            this.lerUsuarios(); // Atualiza a lista de usuários após atualizar
+            this.formUsuario.reset(); // Reseta o formulário após o envio
+          },
+          err => console.log("Erro ao atualizar usuário:", err)
+        );
+      } else {
+        // Cria novo usuário
+        this.apiService.saveClients(user).subscribe(
+          resp => {
+            console.log("Usuário salvo com sucesso:", resp);
+            this.lerUsuarios(); // Atualiza a lista de usuários após salvar
+            this.formUsuario.reset(); // Reseta o formulário após o envio
+          },
+          err => console.log("Erro ao salvar usuário:", err)
+        );
+      }
+    } else {
+      console.log("Formulário inválido!");
+    }
+  }
+  
+  
+  lerUsuarios() {
+    this.apiService.getClients().subscribe(
+      (usuarios: Usuario[]) => {
+        console.log("Usuários recebidos:", this.clients);
+        // Aqui você pode armazenar os usuários em uma variável e exibi-los em uma tabela, por exemplo
+        this.listaUsuarios = this.clients; // listaUsuarios seria uma variável que mantém os usuários
+      },
+      err => console.log("Erro ao buscar usuários:", err)
+    );
+  }
+  
+    // atualizar o usuário
+    atualizarUsuario(id: number): void {
+      if (id !== undefined) {
+        const usuario = this.listaUsuarios.find(u => u.id === id);
+        if (usuario) {
+          this.formUsuario.patchValue({
+            nome: usuario.nome,
+            email: usuario.email
+          });
+          
+          this.formUsuario.patchValue({ id: usuario.id });
+        }
+      } else {
+        console.error("ID de usuário indefinido");
+      }
+    }
+    
+
+  // Método para excluir o usuário
+  excluirUsuario(id: number): void {
+    if (id !== undefined) {
+      this.apiService.deleteClient(id).subscribe(() => {
+        console.log(`Usuário com ID ${id} excluído com sucesso`);
+        this.listaUsuarios = this.listaUsuarios.filter(u => u.id !== id);
+      },
+      err => console.log("Erro ao excluir usuário:", err));
+    } else {
+      console.error("ID de usuário indefinido");
+    }
+  }
+  
+
   
 
 }
