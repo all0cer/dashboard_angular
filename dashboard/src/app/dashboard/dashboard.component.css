@@ -1,68 +1,159 @@
- .dashboard-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 20px;
-    padding: 20px;
-  }
+.dashboard-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px;
+}
+
+.summary {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.card {
+  padding: 10px;
+  background-color: #f4f4f4;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.title {
+  text-align: center;
+  margin: 20px 0;
+  font-size: 24px;
+  color: #333;
+}
   
-  .summary {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 20px;
-  }
-  
-  .card {
-    padding: 10px;
-    background-color: #f4f4f4;
-    border-radius: 5px;
-    text-align: center;
+ngx-charts-bar-vertical, ngx-charts-bar-horizontal {
+  display: block;
+  width: 100%;
+  max-width: 1200px;
+  margin: 20px auto;
+  border-radius: 5px;
+  justify-content: center;
+}
+
+.chart-container {
+  margin: 20px 0;
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  flex: 1 1 calc(50% - 20px);
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
 
-  .title {
-    text-align: center;
-    margin: 20px 0;
-    font-size: 24px;
-    color: #333;
-  }
-    
-  ngx-charts-bar-vertical, ngx-charts-bar-horizontal {
-    display: block;
-    width: 100%;
-    max-width: 1200px;
-    margin: 20px auto;
-    border-radius: 5px;
-    justify-content: center;
-  }
+p {
+  text-align: center;
+  color: #5b5b5b;
+  font-size: 16px;
+}
 
-  .chart-container {
-    margin: 20px 0;
-    padding: 10px;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    flex: 1 1 calc(50% - 20px);
-    box-sizing: border-box;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
+.no-data {
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  font-style: italic;
+}
 
-  p {
-    text-align: center;
-    color: #5b5b5b;
-    font-size: 16px;
-  }
-  
-  .no-data {
-    background-color: #f0f0f0;
-    padding: 10px;
-    border-radius: 5px;
-    text-align: center;
-    font-style: italic;
-  }
+/* Estilização do formulário */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: #f4f4f4;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
 
-  @media (max-width: 768px) {
-    .chart-container {
-      flex: 1 1 100%; /* Em telas menores, cada gráfico ocupa 100% da largura, um por linha */
-    }
-  }
+form h3 {
+  font-size: 20px;
+  color: #7d5e87;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+input[type="text"] {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  transition: border-color 0.3s;
+}
+
+input[type="text"]:focus {
+  border-color: #7d5e87;
+  outline: none;
+}
+
+button[type="submit"] {
+  padding: 10px;
+  font-size: 16px;
+  background-color: #7d5e87;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+  background-color: #7d5e87;
+}
+
+/* Estilização da tabela */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+table th, table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  color: #5b5b5b;
+}
+
+table th {
+  background-color: #f4f4f4;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+table td {
+  font-size: 14px;
+}
+
+table td button:first-child {
+  margin-right: 10px;
+}
+
+table tr:hover {
+  background-color: #f1f1f1;
+}
+
+button {
+  padding: 8px 12px;
+  background-color: #7d5e87;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #7d5e87;
+}
