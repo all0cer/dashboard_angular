@@ -7,7 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
@@ -20,12 +20,13 @@ import { ReactiveFormsModule } from '@angular/forms';
     AppRoutingModule,
     NgxChartsModule,
     ReactiveFormsModule,
+    HttpClientModule,
     MatTableModule,
     MatCardModule
   ],
   providers: [
     provideClientHydration(),
-    provideAnimationsAsync()
+    provideAnimationsAsync() //caso o HttpClientModule quebre, utilize o provider "provideHttpClient(withInterceptorsFromDi()"
   ],
   bootstrap: [AppComponent]
 })

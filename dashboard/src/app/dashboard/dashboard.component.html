@@ -14,21 +14,25 @@
 <div class="chart-container">
   <h3>Lista de Usuários</h3>
   <table>
-    <tr>
-      <th>ID</th>
-      <th>Nome</th>
-      <th>Email</th>
-      <th>Ações</th>
-    </tr>
-    <tr *ngFor="let usuario of listaUsuarios">
-      <td>{{ usuario.id }}</td>
-      <td>{{ usuario.nome }}</td>
-      <td>{{ usuario.email }}</td>
-      <td>
-        <button (click)="atualizarUsuario(usuario.id)">Editar</button>
-        <button (click)="excluirUsuario(usuario.id)">Excluir</button>
-      </td>
-    </tr>    
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let usuario of listaUsuarios">
+        <td>{{ usuario.id }}</td>
+        <td>{{ usuario.name }}</td>
+        <td>{{ usuario.email }}</td>
+        <td>
+          <button (click)="atualizarUsuario(usuario.id)">Editar</button>
+          <button (click)="excluirUsuario(usuario.id)">Excluir</button>
+        </td>
+      </tr>    
+    </tbody>
   </table>
 </div>
 

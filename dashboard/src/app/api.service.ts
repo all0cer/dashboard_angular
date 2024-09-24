@@ -16,6 +16,7 @@ export class ApiService {
   constructor(private http: HttpClient) {}
 
   getThemes(): Observable<any> {
+    console.log('passou')
     return this.http.get(this.apiUrl);
   }
 
@@ -39,6 +40,7 @@ export class ApiService {
   saveClients(cliente: Usuario): Observable<Usuario> {
     const httpHeaders: HttpHeaders = new HttpHeaders()
       .set('Content-Type', 'application/json');
+     console.log(httpHeaders); 
     return this.http.post<Usuario>(this.clientsUrl, cliente, { headers: httpHeaders });
   }
 

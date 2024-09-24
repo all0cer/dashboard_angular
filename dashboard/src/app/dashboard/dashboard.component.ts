@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, RequiredValidator, Validators } from '@angular/
 import { id } from '@swimlane/ngx-charts';
 export type Usuario = { 
   id?: number;
-  nome: string;
+  name: string;
   email: string;
 }
 
@@ -241,8 +241,8 @@ private calculateTotalRevenue(): void {
   
     if (this.formUsuario.valid) {
       const user: Usuario = {
-        id: id,
-        nome: this.formUsuario.get('nome')?.value || '',
+        id: JSON.parse(id),
+        name: this.formUsuario.get('nome')?.value || '',
         email: this.formUsuario.get('email')?.value || ''
       };
   
@@ -290,7 +290,7 @@ private calculateTotalRevenue(): void {
         const usuario = this.listaUsuarios.find(u => u.id === id);
         if (usuario) {
           this.formUsuario.patchValue({
-            nome: usuario.nome,
+            nome: usuario.name,
             email: usuario.email
           });
           
